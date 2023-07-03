@@ -67,11 +67,9 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const authorId = ctx.userId;
 
-      //bug the to fix it! (cant create post bcs authorId unavailable)
       const { success } = await ratelimit.limit(authorId);
 
       if (!success) throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
-      //bug the to fix it!
 
       const post = await ctx.prisma.post.create({
         data: {
