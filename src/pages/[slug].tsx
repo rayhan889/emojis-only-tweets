@@ -10,6 +10,23 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
+const ProfileFeed = ({ userId }: { userId: string }) => {
+  const { data, isLoading } = api.post.getPostsByUserId.useQuery({ userId });
+
+  if (isLoading) return <LoadingPage />;
+
+  if (!data || data.length === 0)
+    return <div>User has not post anything yet.</div>;
+
+  return (
+    <div>
+      {data.map((fullPost) => {
+        return <PostView {...fullPost} key={fullPost.post.id} />;
+      })}
+    </div>
+  );
+};
+
 const ProfilePage = (
   props: InferGetServerSidePropsType<typeof getStaticProps>
 ) => {
@@ -46,6 +63,7 @@ const ProfilePage = (
             data?.username ?? ""
           }`}</span>
         </div>
+        <ProfileFeed userId={data?.id} />
       </PageLayout>
     </>
   );
@@ -55,6 +73,8 @@ import { createServerSideHelpers } from "@trpc/react-query/server";
 import { appRouter } from "~/server/api/root";
 import superjson from "superjson";
 import { prisma } from "~/server/db";
+import { LoadingPage } from "~/components/loading";
+import { PostView } from "~/components/postView";
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ slug: string }>
