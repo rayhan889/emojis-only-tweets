@@ -6,7 +6,7 @@ import Image from "next/image";
 import LoadingSpinner, { LoadingPage } from "~/components/loading";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { PageLayout } from "./layout";
+import { PageLayout } from "../components/layout";
 import { PostView } from "~/components/postView";
 
 const CreatePostWizard = () => {

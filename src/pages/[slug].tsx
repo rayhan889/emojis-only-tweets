@@ -5,7 +5,7 @@ import type {
 } from "next";
 import Head from "next/head";
 import { api } from "~/utils/api";
-import { PageLayout } from "./layout";
+import { PageLayout } from "../components/layout";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
